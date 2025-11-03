@@ -2,11 +2,11 @@ package com.example.sospets.services.impl;
 
 import com.example.sospets.entities.Animal;
 import com.example.sospets.entities.Cor;
-import com.example.sospets.entities.Tutor; // 1. Importar o Tutor
+import com.example.sospets.entities.Tutor;
 import com.example.sospets.enums.Especie;
 import com.example.sospets.repositories.AnimalRepo;
 import com.example.sospets.repositories.CorRepo;
-import com.example.sospets.repositories.TutorRepo; // 2. Importar o TutorRepo
+import com.example.sospets.repositories.TutorRepo;
 import com.example.sospets.services.AnimalService;
 import com.example.sospets.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -26,26 +26,25 @@ public class AnimalServiceImpl implements AnimalService {
     private CorRepo corRepo;
 
     @Autowired
-    private TutorRepo tutorRepo; // 3. Adicionar o repositório do Tutor
+    private TutorRepo tutorRepo;
 
     @Autowired
     private ModelMapper mapper;
 
     @Override
     public Animal create(Animal animal) {
-        // Busca a Cor (como já fazia)
+        // Busca a Cor
         Cor cor = corRepo.findById(animal.getCor().getId())
                 .orElseThrow(() -> new ObjectNotFoundException("Cor não encontrada"));
         animal.setCor(cor);
 
-        // 4. ADICIONAR ESTA LÓGICA PARA BUSCAR O TUTOR
-        // Verifica se um tutor foi informado (pode ser nulo)
-        if (animal.getTutor() != null && animal.getTutor().getCpf() != null) {
+        // Busca o Tutor
+        if (animal.getTutor() != null && animal.getTutor().getCpf() != null && !animal.getTutor().getCpf().isEmpty()) {
             Tutor tutor = tutorRepo.findByCpf(animal.getTutor().getCpf())
                     .orElseThrow(() -> new ObjectNotFoundException("Tutor não encontrado"));
             animal.setTutor(tutor);
         } else {
-            animal.setTutor(null); // Garante que, se não veio, é nulo
+            animal.setTutor(null);
         }
 
         return repository.save(mapper.map(animal, Animal.class));
@@ -61,6 +60,7 @@ public class AnimalServiceImpl implements AnimalService {
         return animal.orElseThrow(()-> new ObjectNotFoundException("Animal não encontrado"));
     }
 
+    // ... (outros métodos find) ...
     @Override
     public List<Animal> findByNomeContainingIgnoreCase(String nome) {
         return repository.findByNomeContainingIgnoreCase(nome);
@@ -76,10 +76,28 @@ public class AnimalServiceImpl implements AnimalService {
         return repository.findByEspecieOrderByNomeDesc(especie);
     }
 
+
+    // MÉTODO UPDATE ATUALIZADO
     @Override
     public Animal update(Animal animal) {
-        // (No futuro, a lógica de update precisará ser igual à de create,
-        // buscando Cor e Tutor antes de salvar)
+        // 1. Garante que o animal que estamos atualizando existe
+        findById(animal.getId());
+
+        // 2. Busca a Cor (lógica idêntica ao create)
+        Cor cor = corRepo.findById(animal.getCor().getId())
+                .orElseThrow(() -> new ObjectNotFoundException("Cor não encontrada"));
+        animal.setCor(cor);
+
+        // 3. Busca o Tutor (lógica idêntica ao create)
+        if (animal.getTutor() != null && animal.getTutor().getCpf() != null && !animal.getTutor().getCpf().isEmpty()) {
+            Tutor tutor = tutorRepo.findByCpf(animal.getTutor().getCpf())
+                    .orElseThrow(() -> new ObjectNotFoundException("Tutor não encontrado"));
+            animal.setTutor(tutor);
+        } else {
+            animal.setTutor(null);
+        }
+
+        // 4. Salva (atualiza) o animal com as entidades Cor e Tutor corretas
         return repository.save(mapper.map(animal, Animal.class));
     }
 

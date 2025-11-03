@@ -83,3 +83,50 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #fff;
 }
+
+/* ... (todo o seu CSS existente) ... */
+
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-edit {
+  background-color: #f0ad4e; /* Laranja */
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #ec971f;
+}
+
+.btn-delete {
+  background-color: #d9534f; /* Vermelho */
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c9302c;
+}
+
+/* Adicione isso para exibir erros de exclusão */
+.form-error {
+  color: #d9534f;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
