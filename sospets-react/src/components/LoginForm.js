@@ -18,7 +18,7 @@ const LoginForm = ({ onSubmit, error }) => {
       </div>
 
       <div className="input-group">
-        <Lock size={18} className="input-icon" />
+        <User size={18} className="input-icon" />
         <input
           type="text"
           placeholder='Login'
