@@ -6,8 +6,13 @@ import PetPage from './pages/PetPage';
 import PetForm from './pages/PetForm';
 import TutorPage from './pages/TutorPage';
 import TutorForm from './pages/TutorForm';
-import ClinicPage from './pages/ClinicPage'; // Já importado
-import ClinicForm from './pages/ClinicForm'; // 1. Importar o novo formulário
+import ClinicPage from './pages/ClinicPage';
+import ClinicForm from './pages/ClinicForm';
+// --- Correções e adições ---
+import CollaboratorPage from './pages/Collaborator';
+import CollaboratorForm from './pages/CollaboratorForm.js'; // ATENÇÃO: Corrigido, removi a vírgula do nome do arquivo. Se o arquivo realmente tiver uma vírgula, ajuste aqui.
+import ReportsPage from './pages/ReportsPage';
+import ServicePage from './pages/ServicePage';
 
 import './App.css';
 
@@ -49,7 +54,7 @@ function App() {
         <Route path="/tutores/novo" element={isAuthenticated ? <TutorForm /> : <Navigate to="/login" replace />} />
         <Route path="/tutores/editar/:cpf" element={isAuthenticated ? <TutorForm /> : <Navigate to="/login" replace />} />
         
-        {/* --- 2. ROTAS DE CLÍNICAS (CRUD COMPLETO) --- */}
+        {/* --- Rotas de Clínicas --- */}
         <Route
           path="/clinicas"
           element={
@@ -66,6 +71,40 @@ function App() {
           path="/clinicas/editar/:id"
           element={
             isAuthenticated ? <ClinicForm /> : <Navigate to="/login" replace />
+          }
+        />
+
+        {/* --- ROTAS DE COLABORADORES (Adicionadas) --- */}
+        <Route
+          path="/colaboradores"
+          element={
+            isAuthenticated ? <CollaboratorPage /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/colaboradores/novo"
+          element={
+            isAuthenticated ? <CollaboratorForm /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/colaboradores/editar/:cpf"
+          element={
+            isAuthenticated ? <CollaboratorForm /> : <Navigate to="/login" replace />
+          }
+        />
+
+        {/* --- ROTAS DE RELATÓRIOS E ATENDIMENTOS (Adicionadas) --- */}
+        <Route
+          path="/relatorios"
+          element={
+            isAuthenticated ? <ReportsPage /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/atendimentos"
+          element={
+            isAuthenticated ? <ServicePage /> : <Navigate to="/login" replace />
           }
         />
 
