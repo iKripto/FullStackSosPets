@@ -1,28 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GitHub, User, Home, FileText, Heart, PlusSquare } from 'react-feather';
-import backgroundImage from '../assets/doguinhos.png'; // Importa a mesma imagem do login [cite: ikripto/curricularizacaofrontend/CurricularizacaoFrontend-e56dfb5337648cc871fc187f8e920a46a724fe1c/src/assets/doguinhos.png]
-import logo from './logo.png'; // Sua logo importada
-import './HomePage.css'; // [cite: ikripto/curricularizacaofrontend/CurricularizacaoFrontend-e56dfb5337648cc871fc187f8e920a46a724fe1c/src/pages/HomePage.css]
+import backgroundImage from '../assets/doguinhos.png';
+import logo from './logo.png'; // [cite: ikripto/fullstacksospets/FullStackSosPets-0fc15d1f65c4ace1f0be6beed39894125100c702/sospets-react/src/pages/logo.png]
+import './HomePage.css'; // [cite: ikripto/fullstacksospets/FullStackSosPets-0fc15d1f65c4ace1f0be6beed39894125100c702/sospets-react/src/pages/HomePage.css]
 
 const HomePage = () => {
   return (
     <div className="home-container">
       <header className="home-header">
-        {/* Imagem da logo corrigida */}
         <img src={logo} alt="SOS Pets Logo" className="home-logo" />
+        <div className="search-bar">
+          <input type="text" placeholder="Pesquisar..." />
+        </div>
       </header>
 
-      {/* Passa a imagem de fundo via 'style' */}
       <main className="home-grid" style={{ backgroundImage: `url(${backgroundImage})` }}>
         
-        {/* Usa o ícone 'GitHub' para 'Pet' */}
         <Link to="/pets" className="menu-card">
           <GitHub size={48} /> 
           <span>Pet</span>
         </Link>
 
-        {/* Link para a página de Tutores */}
         <Link to="/tutores" className="menu-card">
           <User size={48} />
           <span>Tutor</span>
@@ -33,6 +32,7 @@ const HomePage = () => {
           <span>Clínicas</span>
         </Link>
         
+        {/* LINK CORRIGIDO */}
         <Link to="/colaboradores" className="menu-card">
           <Home size={48} />
           <span>Colaboradores</span>
