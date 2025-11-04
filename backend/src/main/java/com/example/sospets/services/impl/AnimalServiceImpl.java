@@ -31,14 +31,14 @@ public class AnimalServiceImpl implements AnimalService {
     @Autowired
     private ModelMapper mapper;
 
-    @Override
-    public Animal create(Animal animal) {
-        // Busca a Cor
+    // Método auxiliar para buscar Cor e Tutor
+    private void setData(Animal animal) {
+        // 1. Busca a Cor
         Cor cor = corRepo.findById(animal.getCor().getId())
                 .orElseThrow(() -> new ObjectNotFoundException("Cor não encontrada"));
         animal.setCor(cor);
 
-        // Busca o Tutor
+        // 2. Busca o Tutor (se houver)
         if (animal.getTutor() != null && animal.getTutor().getCpf() != null && !animal.getTutor().getCpf().isEmpty()) {
             Tutor tutor = tutorRepo.findByCpf(animal.getTutor().getCpf())
                     .orElseThrow(() -> new ObjectNotFoundException("Tutor não encontrado"));
@@ -46,7 +46,11 @@ public class AnimalServiceImpl implements AnimalService {
         } else {
             animal.setTutor(null);
         }
+    }
 
+    @Override
+    public Animal create(Animal animal) {
+        setData(animal); // Chama a lógica auxiliar
         return repository.save(mapper.map(animal, Animal.class));
     }
 
@@ -60,7 +64,6 @@ public class AnimalServiceImpl implements AnimalService {
         return animal.orElseThrow(()-> new ObjectNotFoundException("Animal não encontrado"));
     }
 
-    // ... (outros métodos find) ...
     @Override
     public List<Animal> findByNomeContainingIgnoreCase(String nome) {
         return repository.findByNomeContainingIgnoreCase(nome);
@@ -76,28 +79,10 @@ public class AnimalServiceImpl implements AnimalService {
         return repository.findByEspecieOrderByNomeDesc(especie);
     }
 
-
-    // MÉTODO UPDATE ATUALIZADO
     @Override
     public Animal update(Animal animal) {
-        // 1. Garante que o animal que estamos atualizando existe
-        findById(animal.getId());
-
-        // 2. Busca a Cor (lógica idêntica ao create)
-        Cor cor = corRepo.findById(animal.getCor().getId())
-                .orElseThrow(() -> new ObjectNotFoundException("Cor não encontrada"));
-        animal.setCor(cor);
-
-        // 3. Busca o Tutor (lógica idêntica ao create)
-        if (animal.getTutor() != null && animal.getTutor().getCpf() != null && !animal.getTutor().getCpf().isEmpty()) {
-            Tutor tutor = tutorRepo.findByCpf(animal.getTutor().getCpf())
-                    .orElseThrow(() -> new ObjectNotFoundException("Tutor não encontrado"));
-            animal.setTutor(tutor);
-        } else {
-            animal.setTutor(null);
-        }
-
-        // 4. Salva (atualiza) o animal com as entidades Cor e Tutor corretas
+        findById(animal.getId()); // Garante que o animal existe
+        setData(animal); // Chama a mesma lógica auxiliar do create
         return repository.save(mapper.map(animal, Animal.class));
     }
 
