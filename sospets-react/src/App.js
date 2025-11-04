@@ -3,13 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PetPage from './pages/PetPage';
-import PetForm from './pages/PetForm'; // Já importado
+import PetForm from './pages/PetForm';
 import TutorPage from './pages/TutorPage';
-// Outros imports que você possa ter
-// import ClinicPage from './pages/ClinicPage'; 
-// import CollaboratorPage from './pages/CollaboratorPage';
-// import ReportsPage from './pages/ReportsPage';
-// import ServicePage from './pages/ServicePage';
+import TutorForm from './pages/TutorForm'; // 1. Importar o novo formulário de Tutor
 
 import './App.css';
 
@@ -23,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rota de Login */}
+        {/* --- Rotas de Login e Home --- */}
         <Route
           path="/login"
           element={
@@ -34,16 +30,14 @@ function App() {
             )
           }
         />
-        
-        {/* Rota Home (Menu) */}
         <Route
           path="/"
           element={
             isAuthenticated ? <HomePage /> : <Navigate to="/login" replace />
           }
         />
-        
-        {/* --- Rotas de Pets --- */}
+
+        {/* --- Rotas de Pets (CRUD Completo) --- */}
         <Route
           path="/pets"
           element={
@@ -56,23 +50,33 @@ function App() {
             isAuthenticated ? <PetForm /> : <Navigate to="/login" replace />
           }
         />
-        {/* ROTA DE EDIÇÃO ADICIONADA */}
         <Route
           path="/pets/editar/:id"
           element={
             isAuthenticated ? <PetForm /> : <Navigate to="/login" replace />
           }
         />
-
-        {/* --- Rotas de Tutores --- */}
+        
+        {/* --- 2. ROTAS DE TUTORES (CRUD COMPLETO) --- */}
         <Route
           path="/tutores"
           element={
             isAuthenticated ? <TutorPage /> : <Navigate to="/login" replace />
           }
         />
-        {/* Você precisará adicionar as rotas /tutores/novo e /tutores/editar/:cpf aqui */}
-
+        <Route
+          path="/tutores/novo"
+          element={
+            isAuthenticated ? <TutorForm /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/tutores/editar/:cpf"
+          element={
+            isAuthenticated ? <TutorForm /> : <Navigate to="/login" replace />
+          }
+        />
+        
       </Routes>
     </BrowserRouter>
   );
