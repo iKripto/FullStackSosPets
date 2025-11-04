@@ -4,6 +4,11 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PetPage from './pages/PetPage';
 import PetForm from './pages/PetForm'; // Importa o novo formulário
+import TutorPage from './pages/TutorPage';
+import ClinicPage from './pages/ClinicPage';
+import CollaboratorPage from './pages/Collaborator';
+import ReportsPage from './pages/ReportsPage';
+import ServicePage from './pages/ServicePage';
 import './App.css';
 
 function App() {
@@ -77,7 +82,66 @@ function App() {
             )
           }
         />
-        
+
+        <Route
+          path="/tutores"
+          element={
+            isAuthenticated ? (
+              <TutorPage /> // Página de listagem de Pets
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }        
+        />
+
+
+        <Route
+          path="/clinicas"
+          element={
+            isAuthenticated ? (
+              <ClinicPage /> // Página de listagem de Clínicas
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }        
+        />
+
+
+        <Route
+          path="/colaboradores"
+          element={
+            isAuthenticated ? (
+              <CollaboratorPage /> // Página de listagem de Colaboradores
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }        
+        />
+
+        <Route
+          path="/relatorios"
+          element={
+            isAuthenticated ? (
+              <ReportsPage /> // Página de listagem de Relatórios
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }        
+        />
+
+        <Route
+          path="/atendimentos"
+          element={
+            isAuthenticated ? (
+              <ServicePage /> // Página de listagem de Atendimentos
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }        
+        />
+
+
+
         {/* Adicione outras rotas (Tutores, Clínicas, etc.) aqui no futuro */}
       </Routes>
     </BrowserRouter>

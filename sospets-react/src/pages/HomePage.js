@@ -1,20 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// Importa o 'GitHub' no lugar de 'PawPrint' e a imagem de fundo
 import { GitHub, User, Home, FileText, Heart, PlusSquare } from 'react-feather';
-import backgroundImage from '../assets/doguinhos.png'; // Importa a mesma imagem do login
-import './HomePage.css';
+import backgroundImage from '../assets/doguinhos.png'; // Importa a mesma imagem do login [cite: ikripto/curricularizacaofrontend/CurricularizacaoFrontend-e56dfb5337648cc871fc187f8e920a46a724fe1c/src/assets/doguinhos.png]
+import logo from './logo.png'; // Sua logo importada
+import './HomePage.css'; // [cite: ikripto/curricularizacaofrontend/CurricularizacaoFrontend-e56dfb5337648cc871fc187f8e920a46a724fe1c/src/pages/HomePage.css]
 
 const HomePage = () => {
   return (
     <div className="home-container">
       <header className="home-header">
-        {/* Adicione sua logo na pasta public/ e descomente a linha abaixo */}
-        {/* <img src="/logo-sospets.png" alt="SOS Pets Logo" className="home-logo" /> */}
-        <h2>SOS Pets</h2> {/* Placeholder enquanto não tem logo */}
-        <div className="search-bar">
-          <input type="text" placeholder="Pesquisar..." />
-        </div>
+        {/* Imagem da logo corrigida */}
+        <img src={logo} alt="SOS Pets Logo" className="home-logo" />
       </header>
 
       {/* Passa a imagem de fundo via 'style' */}
@@ -26,6 +22,7 @@ const HomePage = () => {
           <span>Pet</span>
         </Link>
 
+        {/* Link para a página de Tutores */}
         <Link to="/tutores" className="menu-card">
           <User size={48} />
           <span>Tutor</span>
